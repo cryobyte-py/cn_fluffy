@@ -3,6 +3,7 @@ import os
 import discord.ext.commands
 from dotenv import load_dotenv 
 import json
+import sqlite3 as sl
 ################## INITIATE ################################
 
 load_dotenv()
@@ -40,21 +41,15 @@ async def embed(ctx, arg1, arg2, cr, cb, cg):
     await ctx.send(embed=embedVar)
 @bot.command()
 async def gl_reg(ctx, arg):
-    dynlist = [foo.get(ctx.guild.id)]
-    print(dynlist)
-    dynlist[0]=arg
-    foo.update({ctx.guild.id:dynlist})
-    #foo.update({ctx.guild.id:{"test2":arg}})
+    try: foo[str(ctx.guild.id)]["test1"] = arg
+    except KeyError: foo.update(str(ctx.guild.id)["test2"])
     f = open("db.json","w")
     json.dump(foo,f,indent=6)
     f.close
 @bot.command()
 async def gl_reg2(ctx, arg):
-    dynlist = foo.get(ctx.guild.id)
-    print(dynlist)
-    dynlist.update({"1":arg})
-    foo.update({ctx.guild.id:dynlist})
-    #foo.update({ctx.guild.id:{"test2":arg}})
+    try: foo[ctx.guild.id]["test2"] = arg
+    except KeyError: foo.update(ctx.guild.id)["test2"]
     f = open("db.json","w")
     json.dump(foo,f,indent=6)
     f.close

@@ -1,15 +1,12 @@
 # TODO
 TODO file for CN_F
-## Section
-CRITICAL:
+## CRITICAL
 - [ ] Replace JSON dependant methods with SQLite
 - [ ] Improve guild/user specific data storage
-## Section
-IMPORTANT:
+## IMPORTANT
 - [ ] Implement moderation
 - [ ] Implement anti-raid
-## Section
-Less important:
+## LESS IMPORTANT
 - [ ] Add currency
 - [-] Custom prefix
 - [ ] Social commands
