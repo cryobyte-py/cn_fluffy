@@ -1,4 +1,4 @@
-Hello stanger!
+##Hello stanger!
 This is a bot I have been developing for Discord, which I codenamed "Fluffy"
 You are free to commit, edit, use or redistribute this software (see LICENSE)
 ``Usage``
