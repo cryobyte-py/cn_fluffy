@@ -4,8 +4,13 @@ import discord.ext.commands
 from dotenv import load_dotenv 
 import json
 import sqlite3 as sl
+## REPLACE ALL JSON METHODS WITH SQLITE
 ################## INITIATE ################################
-
+f = open("data.db","w")
+f.close
+conn = sl.connect("data.db")
+cur = conn.cursor()
+cur.execute("""CREATE TABLE IF NOT EXISTS main_data (guild_id integer, data text);""")
 load_dotenv()
 bot = discord.ext.commands.Bot(command_prefix="..!")
 
@@ -14,18 +19,14 @@ async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
     await bot.change_presence(activity=discord.Game(name="Test mode initiated"))
 
-f = open("db.json")
-foo = json.load(f)
-dynlist = [0,0]
-f.close
-print(foo)
-
 ############################################################
 
 ## COMMAND:
 # @bot.command()
 # async def <COMMAND NAME>(ctx, <insert args>):
-
+@bot.command()
+async def reg1(ctx, arg):
+    cur.execute()
 @bot.command()
 async def test(ctx, arg):
     await ctx.send(arg)
@@ -39,20 +40,7 @@ async def hug(ctx, arg):
 async def embed(ctx, arg1, arg2, cr, cb, cg):
     embedVar = discord.Embed(title=arg1, description=arg2, color=discord.Color.from_rgb(int(cr), int(cb), int(cg)))
     await ctx.send(embed=embedVar)
-@bot.command()
-async def gl_reg(ctx, arg):
-    try: foo[str(ctx.guild.id)]["test1"] = arg
-    except KeyError: foo.update(str(ctx.guild.id)["test2"])
-    f = open("db.json","w")
-    json.dump(foo,f,indent=6)
-    f.close
-@bot.command()
-async def gl_reg2(ctx, arg):
-    try: foo[ctx.guild.id]["test2"] = arg
-    except KeyError: foo.update(ctx.guild.id)["test2"]
-    f = open("db.json","w")
-    json.dump(foo,f,indent=6)
-    f.close
+
 # help command, update regularly
 
 @bot.command()
@@ -61,7 +49,5 @@ async def cmds(ctx):
     embedHelp.add_field(name="hug", value="Hugs a user \n Usage: `..!hug <target>`")
     embedHelp.add_field(name="embed", value="Sends an embed. \n Usage: `..!embed <title> <desc> <red> <blue> <green>`")
     await ctx.send(embed=embedHelp)
-startup = input("Ready to start? [Y/N]")
-if startup == "Y" or "y":
-    bot.run(os.getenv('TOKEN'))
-else: exit()
+
+bot.run(os.getenv('TOKEN'))
