@@ -1,5 +1,6 @@
 import discord
 import os
+from discord import client
 import discord.ext.commands
 from dotenv import load_dotenv 
 import json
@@ -45,6 +46,13 @@ async def dice(ctx, arg):
     embedDice = discord.Embed(title="Dice", color =discord.Color.from_rgb(100, 255, 20))
     embedDice.add_field(name="You have rolled:", value=str(random.randint(1,int(arg))))
     await ctx.send(embed=embedDice)
+@bot.command()
+async def shutdown(ctx):
+    if ctx.author.id == 472448933348769795:
+        await ctx.send("Night night.")
+        await bot.close()
+    else:
+        await ctx.send("YOU DON'T HAVE PERMISSION TO DO THAT :x:")
 @bot.command()
 async def goatfact(ctx):
     goatfacts = [
