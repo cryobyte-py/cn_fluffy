@@ -9,13 +9,11 @@ import random
 ## TRY TO FIX SQLITE OR FIND AN ALTERNATIVE
 ## E.G.: PARSING INTO .TXT
 ################## INITIATE ################################
-f = open("data.db","w")
+f = open("data.sqlite3","w")
 f.close
-conn = sl.connect("data.db")
+conn = sl.connect("data.sqlite3")
 cur = conn.cursor()
-cur.execute("""CREATE TABLE IF NOT EXISTS test (guild_id INTEGER);""")
-cur.close()
-conn.close()
+cur.execute("""CREATE TABLE IF NOT EXISTS test (guild_id, test);""")
 load_dotenv()
 bot = discord.ext.commands.Bot(command_prefix="..!")
 
@@ -26,6 +24,12 @@ async def on_ready():
 
 ############################################################
 
+def testdata(conn, input):
+    sql = "UPDATE test SET test = ? WHERE guild_id = ?"
+    cur.execute(sql,input)
+    conn.commit()
+
+############################################################
 ## COMMAND:
 # @bot.command()
 # async def <COMMAND NAME>(ctx, <insert args>):
@@ -33,8 +37,14 @@ async def on_ready():
 async def reg1(ctx, arg):
     cur.execute()
 @bot.command()
-async def test(ctx, arg):
-    await ctx.send(arg)
+async def start(ctx):
+    cur.execute("INSERT INTO test (guild_id) VALUES ("+str(ctx.guild.id)+")")
+    conn.commit()
+@bot.command()
+async def test(ctx, arg): 
+    cur.execute("SELECT test FROM test WHERE guild_id = " + str(ctx.guild.id))
+    await ctx.send(str(cur.fetchone())+"-->"+str(arg))
+    testdata(conn, (arg, ctx.guild.id))
 @bot.command()
 async def con(ctx):
     print("success")
