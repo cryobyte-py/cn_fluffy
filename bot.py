@@ -47,8 +47,16 @@ async def user(ctx, arg):
         (uid,cr) = res
         await ctx.send(str(cr)+"--->"+str(arg))
 @bot.command()
-async def reg1(ctx, arg):
-    cur.execute()
+async def test2(ctx, arg):
+    cur.execute("CREATE TABLE IF NOT EXISTS guild" + str(ctx.guild.id) + " (uid,curr)")
+    cur.execute("SELECT * FROM guild"+str(ctx.guild.id)+" WHERE uid = "+str(ctx.author.id))
+    res = cur.fetchone()
+    try: (uid, cr) = res
+    except:
+        cur.execute("INSERT INTO guild"+str(ctx.guild.id)+" (uid,curr) VALUES (?, ?)",(ctx.author.id,arg))
+        conn.commit()
+    finally:
+        cur.execute("UPDATE guild"+str(ctx.guild.id)+" SET curr = ? WHERE uid = ?",(arg, ctx.author.id))
 @bot.command()
 async def start(ctx):
     cur.execute("INSERT INTO test (guild_id) VALUES ("+str(ctx.guild.id)+")")
