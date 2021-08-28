@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.6.1
+
+### Fixed
+
+- A bug where bot will not return a message when used ..!join if not in a channel
+
 ## v0.6
 
 ### Added

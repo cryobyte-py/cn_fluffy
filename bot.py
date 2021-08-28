@@ -44,6 +44,8 @@ async def join(context):
             channel = context.author.voice.channel
             voice = await channel.connect()
             player = voice.play(discord.FFmpegPCMAudio(executable="C:/ffmpeg/bin/ffmpeg.exe", source="testaud.mp3"))
+        else:
+            context.send("You must be in a voice channel")
 
 # Leave command, leaves the voice channel
 @bot.command()
@@ -132,6 +134,8 @@ async def cmds(ctx):
     embedHelp.add_field(name="hug", value="Hugs a user \n Usage: `..!hug <target>`")
     embedHelp.add_field(name="embed", value="Sends an embed. \n Usage: `..!embed <title> <desc> <red> <blue> <green>`")
     embedHelp.add_field(name="goatfact", value="Facts about goats!")
+    embedHelp.add_field(name="join", value="Joins a VC you are in")
+    embedHelp.add_field(name="leave", value="Leaves the VC")
     await ctx.send(embed=embedHelp)
 ############################################33
 bot.run(os.getenv('TOKEN'))
