@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.6.3
+
+### Fixed
+
+- Help command not up-to-date
+
 ## v0.6.2
 
 ## Added
