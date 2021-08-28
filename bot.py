@@ -92,9 +92,29 @@ async def test(ctx, arg):
 @bot.command()
 async def con(ctx):
     print("success")
+##### Social commands
 @bot.command()
 async def hug(ctx, arg):
     await ctx.send("<@"+str(ctx.author.id)+">" + " hugs " + arg)
+@bot.command()
+async def kiss(ctx, arg):
+    await ctx.send("<@"+str(ctx.author.id)+">" + " kisses " + arg)
+@bot.command()
+async def cuddle(ctx, arg):
+    await ctx.send("<@"+str(ctx.author.id)+">" + " cuddles " + arg)
+@bot.command()
+async def fuck(ctx):
+    await ctx.send("go to horny jail.")
+@bot.command()
+async def pat(ctx, arg):
+    await ctx.send("<@"+str(ctx.author.id)+">" + " pats " + arg)
+@bot.command()
+async def nuzzle(ctx, arg):
+    await ctx.send("<@"+str(ctx.author.id)+">" + " nuzzles " + arg)
+@bot.command()
+async def pounce(ctx, arg):
+    await ctx.send("<@"+str(ctx.author.id)+">" + " pounces on " + arg)
+#####
 @bot.command()
 async def dice(ctx, arg):
     embedDice = discord.Embed(title="Dice", color =discord.Color.from_rgb(100, 255, 20))

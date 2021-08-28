@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v0.6.2
+
+## Added
+
+- More and better social commands
+
+
 ## v0.6.1
 
 ### Fixed

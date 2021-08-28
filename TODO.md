@@ -16,5 +16,5 @@ TODO file for Codename Fluffy
 ## LESS IMPORTANT
 
 - [ ] Add currency // in progress
-- [ ] Social commands
+- [X] Social commands
 - [ ] Slash commands
