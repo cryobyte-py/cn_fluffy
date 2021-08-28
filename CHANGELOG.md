@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## v0.5.1
+
+### Fixed
+
+- test command not creating a new row on table test
+
+- changes not committing
+
+## v0.5
+
+### Added
+
+- Guild specific table creation for user data storage
+
+- General improvements
+
 ## v0.4
 
 ### Added

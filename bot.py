@@ -2,6 +2,7 @@ import discord
 import os
 from discord import client
 import discord.ext.commands
+from discord import FFmpegPCMAudio
 from dotenv import load_dotenv 
 import json
 import sqlite3 as sl
@@ -20,6 +21,9 @@ bot = discord.ext.commands.Bot(command_prefix="..!")
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
     await bot.change_presence(activity=discord.Game(name="Test mode initiated"))
+@bot.event
+async def on_member_join(member):
+    await member.send("Welcome!")
 
 ############################################################
 
@@ -32,6 +36,15 @@ def testdata(conn, input):
 ## COMMAND:
 # @bot.command()
 # async def <COMMAND NAME>(ctx, <insert args>):
+@bot.command()
+async def join(context):
+        channel = context.author.voice.channel
+        await channel.connect()
+
+# Leave command, leaves the voice channel
+@bot.command()
+async def leave(context):
+        await context.voice_client.disconnect()
 @bot.command()
 async def user(ctx, arg):
     cur.execute("select * from user where userid =" + str(ctx.author.id))
@@ -57,17 +70,19 @@ async def test2(ctx, arg):
         conn.commit()
     finally:
         cur.execute("UPDATE guild"+str(ctx.guild.id)+" SET curr = ? WHERE uid = ?",(arg, ctx.author.id))
-@bot.command()
-async def start(ctx):
-    cur.execute("INSERT INTO test (guild_id) VALUES ("+str(ctx.guild.id)+")")
-    conn.commit()
+        conn.commit()
 @bot.command()
 async def test(ctx, arg): 
     cur.execute("SELECT * FROM test WHERE guild_id = " + str(ctx.guild.id))
     res = cur.fetchone()
-    (gid, tst) = res
-    await ctx.send(str(tst)+"-->"+str(arg))
-    testdata(conn, (arg, ctx.guild.id))
+    try: (gid, tst) = res
+    except:
+        cur.execute("INSERT INTO test (guild_id) VALUES ("+str(ctx.guild.id)+")")
+        conn.commit()
+    finally:
+        (gid, tst) = res
+        await ctx.send(str(tst)+"-->"+str(arg))
+        testdata(conn, (arg, ctx.guild.id))
 @bot.command()
 async def con(ctx):
     print("success")
