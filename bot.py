@@ -1,6 +1,8 @@
 import discord
 import os
 from discord import client
+from discord import player
+from discord.ext.commands import has_permissions, MissingPermissions
 import discord.ext.commands
 from discord import FFmpegPCMAudio
 from dotenv import load_dotenv 
@@ -38,8 +40,10 @@ def testdata(conn, input):
 # async def <COMMAND NAME>(ctx, <insert args>):
 @bot.command()
 async def join(context):
-        channel = context.author.voice.channel
-        await channel.connect()
+        if (context.author.voice):
+            channel = context.author.voice.channel
+            voice = await channel.connect()
+            player = voice.play(discord.FFmpegPCMAudio(executable="C:/ffmpeg/bin/ffmpeg.exe", source="testaud.mp3"))
 
 # Leave command, leaves the voice channel
 @bot.command()
@@ -129,5 +133,5 @@ async def cmds(ctx):
     embedHelp.add_field(name="embed", value="Sends an embed. \n Usage: `..!embed <title> <desc> <red> <blue> <green>`")
     embedHelp.add_field(name="goatfact", value="Facts about goats!")
     await ctx.send(embed=embedHelp)
-
+############################################33
 bot.run(os.getenv('TOKEN'))

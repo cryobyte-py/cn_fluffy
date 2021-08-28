@@ -1,21 +1,20 @@
 # TODO
 
-TODO file for CN_F
+TODO file for Codename Fluffy
 
 ## CRITICAL
 
-- [X] Replace JSON dependant methods with SQLite // ALMOST DONE
-  - [ ] Database output parsing
-- [ ] Improve guild/user specific data storage // IN PROGRESS
+- [X] Replace JSON dependant methods with SQLite
+  - [X] Database output parsing
+  - [ ] Final improvements
+- [X] Improve guild/user specific data storage // ALMOST DONE, STILL UNSTABLE
 
 ## IMPORTANT
 
-- [ ] Implement moderation
-- [ ] Implement anti-raid
+- [ ] Implement moderation // WORKING ON
 
 ## LESS IMPORTANT
 
-- [ ] Add currency
-- [ ] Custom prefix // Canceled due to limitations
+- [ ] Add currency // in progress
 - [ ] Social commands
 - [ ] Slash commands

@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v0.6
+
+### Added
+
+- a demo for music system
+
+- initiated work on moderation
+
 ## v0.5.1
 
 ### Fixed
