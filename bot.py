@@ -152,6 +152,10 @@ async def embed(ctx, arg1, arg2, cr, cb, cg):
 async def cmds(ctx):
     embedHelp = discord.Embed(title="Commands:", desc="Prefix = ..!", color =discord.Color.from_rgb(200, 255, 20))
     embedHelp.add_field(name="hug", value="Hugs a user \n Usage: `..!hug <target>`")
+    embedHelp.add_field(name="kiss", value="Kisses a user \n Usage: `..!kiss <target>`")
+    embedHelp.add_field(name="cuddle", value="Cuddles a user \n Usage: `..!cuddle <target>`")
+    embedHelp.add_field(name="pat", value="Pats a user \n Usage: `..!Cuddle <target>`")
+    embedHelp.add_field(name="pounce", value="Pounces on a user \n Usage: `..!pounce <target>`")
     embedHelp.add_field(name="embed", value="Sends an embed. \n Usage: `..!embed <title> <desc> <red> <blue> <green>`")
     embedHelp.add_field(name="goatfact", value="Facts about goats!")
     embedHelp.add_field(name="join", value="Joins a VC you are in")
