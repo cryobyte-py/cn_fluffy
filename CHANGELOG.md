@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v1 - The "Social" Update
+
+- We are out of beta, we're releasing on time (If you didn't get that's a Portal 2 reference :3)
+
+### Added
+
+- Dependency on nekos.fun API
+
+- A ton of more and enhanced social commands
+
+- Ability to return fox related images
+
 ## v0.6.3
 
 ### Fixed
@@ -11,7 +23,6 @@
 ## Added
 
 - More and better social commands
-
 
 ## v0.6.1
 

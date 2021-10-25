@@ -58,8 +58,9 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-db.sqlite3
-db.sqlite3-journal
+data.sqlite3
+data.sqlite3-journal
+apiimptest.py
 
 # Flask stuff:
 instance/
@@ -132,4 +133,3 @@ dmypy.json
 .json
 .exe
 .sqlite3
-.sqlite
