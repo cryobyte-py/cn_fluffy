@@ -2,7 +2,7 @@
 
 ## v1 - The "Social" Update
 
-- We are out of beta, we're releasing on time (If you didn't get that's a Portal 2 reference :3)
+- We are out of beta, we're releasing on time
 
 ### Added
 
