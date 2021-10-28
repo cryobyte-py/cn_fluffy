@@ -12,6 +12,7 @@ TODO file for Codename Fluffy
 ## IMPORTANT
 
 - [ ] Implement moderation // WORKING ON
+  - [ ] Refine Mute commands (Set up background tasks and add guild isolation between mute states)
 
 ## LESS IMPORTANT
 

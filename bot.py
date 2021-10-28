@@ -1,3 +1,4 @@
+from logging import error
 import discord
 import os
 from discord import client
@@ -12,34 +13,37 @@ import sqlite3 as sl
 import random
 import requests
 from requests.exceptions import HTTPError
+from discord.ext.commands import MissingPermissions, has_permissions
+from discord.utils import get
 ## TRY TO FIX SQLITE OR FIND AN ALTERNATIVE
 ## E.G.: PARSING INTO .TXT
 ################## INITIATE ################################
 conn = sl.connect("data.sqlite3")
 cur = conn.cursor()
-cur.execute("""CREATE TABLE IF NOT EXISTS test (guild_id, test);""")
-cur.execute("""CREATE TABLE IF NOT EXISTS user (userid, curr INTEGER);""")
+cur.execute("""CREATE TABLE IF NOT EXISTS guild (guild_id PRIMARY KEY, mute_id, test);""")
+cur.execute("""CREATE TABLE IF NOT EXISTS user (userid PRIMARY KEY, curr INTEGER);""")
 load_dotenv()
 bot = discord.ext.commands.Bot(command_prefix="..!")
 
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
-    await bot.change_presence(activity=discord.Game(name="Pre-development"))
+    await bot.change_presence(activity=discord.Game(name="with a portal gun! || Aperture Laboratories proudly presents"))
 @bot.event
 async def on_member_join(member):
     await member.send("Welcome!")
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send('Please pass in all requirements :rolling_eyes:.')
-    if isinstance(error, commands.MissingPermissions):
-        await ctx.send("You dont have all the requirements :angry:")
-
+        await ctx.send('Please pass in all requirements.')
+    elif isinstance(error, commands.MissingPermissions):
+        await ctx.send("You don't have permissions! :angry:")
+    else:
+        await ctx.send(f"`{error}`")
 ############################################################
 
 def testdata(conn, input):
-    sql = "UPDATE test SET test = ? WHERE guild_id = ?"
+    sql = "UPDATE guild SET guild = ? WHERE guild_id = ?"
     cur.execute(sql,input)
     conn.commit()
 
@@ -48,26 +52,29 @@ def testdata(conn, input):
 # @bot.command()
 # async def <COMMAND NAME>(ctx, <insert args>):
 
-
-#@bot.command()
-#@commands.has_permissions(ban_members = True)
-#async def ban(ctx, member : discord.Member, *, reason = None):
-#    await member.ban(reason = reason)
-#
-##The below code unbans player.
-#@bot.command()
-#@commands.has_permissions(administrator = True)
-#async def unban(ctx, *, member):
-#    banned_users = await ctx.guild.bans()
-#    member_name, member_discriminator = member.split("#")
-#
-#    for ban_entry in banned_users:
-#        user = ban_entry.user
-#
-#        if (user.name, user.discriminator) == (member_name, member_discriminator):
-#            await ctx.guild.unban(user)
-#            await ctx.send(f'Unbanned {user.mention}')
-#            return
+### TODO: REFINE MUTE
+#@bot.command(help="//DEBUG//")
+#async def roletest(ctx, target: discord.Member):
+#    if ctx.message.author.guild_permissions.administrator:
+#        mut = get(ctx.guild.roles, name = "Muted")
+#        await target.add_roles(mut)
+#@bot.command(help="//DEBUG//")
+#async def rolereturn(ctx):
+#    mut = get(ctx.guild.roles, name = "Muted")
+#    print(mut)
+#    if mut is None:
+#        print("Role not defined.")
+#        perms = discord.Permissions(send_messages=False, read_messages=True)
+#        await ctx.guild.create_role(name="Muted",perms=perms)
+#    await ctx.send(f"Mute ID:{mut}")
+@bot.command(help="Kicks the user")
+async def kick(ctx, target: discord.Member, reason=None):
+    await target.kick(reason=reason)
+    await ctx.send(f"{target} had been kicked. Reason: {reason}")
+@bot.command(help="Bans the user")
+async def ban(ctx, target: discord.Member, reason=None):
+    await target.ban(reason=reason)
+    await ctx.send(f"{target} had been banned. Reason: {reason}")
 @bot.command(help="//DEBUG//")
 async def join(context):
         if (context.author.voice):
@@ -76,7 +83,6 @@ async def join(context):
             player = voice.play(discord.FFmpegPCMAudio(executable="C:/ffmpeg/bin/ffmpeg.exe", source="testaud.mp3"))
         else:
             context.send("You must be in a voice channel")
-
 # Leave command, leaves the voice channel
 @bot.command(help="//DEBUG//")
 async def leave(context):
@@ -96,7 +102,7 @@ async def user(ctx, arg):
         (uid,cr) = res
         await ctx.send(str(cr)+"--->"+str(arg))
 @bot.command(help="//DEBUG//")
-async def test2(ctx, arg):
+async def guild_reg(ctx, arg):
     cur.execute("CREATE TABLE IF NOT EXISTS guild" + str(ctx.guild.id) + " (uid,curr)")
     cur.execute("SELECT * FROM guild"+str(ctx.guild.id)+" WHERE uid = "+str(ctx.author.id))
     res = cur.fetchone()
@@ -108,17 +114,9 @@ async def test2(ctx, arg):
         cur.execute("UPDATE guild"+str(ctx.guild.id)+" SET curr = ? WHERE uid = ?",(arg, ctx.author.id))
         conn.commit()
 @bot.command(help="//DEBUG//")
-async def test(ctx, arg): 
-    cur.execute("SELECT * FROM test WHERE guild_id = " + str(ctx.guild.id))
-    res = cur.fetchone()
-    try: (gid, tst) = res
-    except:
-        cur.execute("INSERT INTO test (guild_id) VALUES ("+str(ctx.guild.id)+")")
-        conn.commit()
-    finally:
-        (gid, tst) = res
-        await ctx.send(str(tst)+"-->"+str(arg))
-        testdata(conn, (arg, ctx.guild.id))
+async def start(ctx): 
+    cur.execute("INSERT INTO guild (guild_id) VALUES ("+str(ctx.guild.id)+")")
+    conn.commit()
 @bot.command()
 async def con(ctx):
     print("success")
@@ -334,8 +332,6 @@ async def foxgirl(ctx):
 async def embed(ctx, arg1, arg2, cr, cb, cg):
     embedVar = discord.Embed(title=arg1, description=arg2, color=discord.Color.from_rgb(int(cr), int(cb), int(cg)))
     await ctx.send(embed=embedVar)
-
-# help command, update regularly
 
 ############################################33
 bot.run(os.getenv('TOKEN'))
