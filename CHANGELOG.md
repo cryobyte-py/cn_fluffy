@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## v2.0.0
+
+### Added
+
+- Cogs
+
+## v1.1.1
+
+### Added
+
+- Aliases for commands
 ## v1.1 
 
 ### Added
