@@ -19,3 +19,4 @@ TODO file for Codename Fluffy
 - [ ] Add currency // in progress
 - [X] Social commands
 - [ ] Slash commands
+- [ ] Custom startup configuration with .json
