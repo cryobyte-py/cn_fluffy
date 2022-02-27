@@ -1,16 +1,19 @@
 from unicodedata import name
 import discord
 from discord.ext import commands
-
-class Moderation(commands.cog, name="Moderation"):
+class Moderation(commands.Cog, name="Moderation"):
     def __init__(self,bot):
         self.bot = bot
     ### TODO: REFINE MUTE
-    #@commands.command(help="//DEBUG//")
-    #async def roletest(self, ctx, target: discord.Member):
-    #    if ctx.message.author.guild_permissions.administrator:
-    #        mut = get(ctx.guild.roles, name = "Muted")
-    #        await target.add_roles(mut)
+    @commands.command(help="//DEBUG//")
+    async def mute(self, ctx, target: discord.Member):
+        if ctx.message.author.guild_permissions.administrator:
+            mut = ctx.guild.get(ctx.guild.roles, name = "Muted")
+            if mut is None:
+                print("Role not defined.")
+                perms = discord.Permissions(send_messages=False, read_messages=True)
+                await ctx.guild.create_role(name="Muted",perms=perms)
+            await target.add_roles(mut)
     #@commands.command(help="//DEBUG//")
     #async def rolereturn(self, ctx):
     #    mut = get(ctx.guild.roles, name = "Muted")

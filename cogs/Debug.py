@@ -3,15 +3,11 @@ import requests
 from requests import HTTPError
 from discord.ext import commands
 import sqlite3 as sl
-conn = sl.connect("assets/data.sqlite3")
-cur = conn.cursor()
-cur.execute("""CREATE TABLE IF NOT EXISTS guild (guild_id PRIMARY KEY, mute_id, test);""")
-cur.execute("""CREATE TABLE IF NOT EXISTS user (userid PRIMARY KEY, curr INTEGER);""")
-class Debug(commands.Cog, name='Debug'):
+class debug(commands.Cog, name='Debug'):
     def __init__(self, bot):
         self.bot = bot
     def setup(self, bot):
-        bot.add_cog(Debug(bot))
+        bot.add_cog(debug(bot))
     @commands.command(help="//DEBUG//")
     async def join(self, context):
             if (context.author.voice):
