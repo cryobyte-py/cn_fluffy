@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.0.1
+
+- Branch separation
+
 ## v2.0.0
 
 ### Added
