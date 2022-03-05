@@ -1,15 +1,14 @@
-import requests
-from requests.exceptions import HTTPError
 import discord
-import random
+import requests
+from requests import HTTPError
 from discord.ext import commands
+import random
 
-class Utility(commands.Cog, name='Utility'):
-    def __init__(self, bot):
+class Utilities(commands.Cog, name = "Utilities"):
+    def __init__(self,bot):
         self.bot = bot
-    
-    def setup(bot):
-        bot.add_cog(Utility(bot))
+    def setup (self,bot):
+        bot.add_cog(Utilities(bot))
 
     async def ping(self, ctx: commands.Context):
         """Get the commands's current websocket latency."""
