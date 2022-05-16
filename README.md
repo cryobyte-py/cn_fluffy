@@ -1,4 +1,4 @@
-# Hello stanger
+# Hello stranger
 
 - This is a bot I have been developing for Discord, which I codenamed "Fluffy"
 
